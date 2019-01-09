@@ -25,11 +25,8 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
-www/*
 dist/*.apk
 dist/*.ipa
-!www/index.html
-!www/piwik.js
 
 # Dependency directory
 node_modules
