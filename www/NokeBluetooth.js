@@ -1,6 +1,6 @@
 var exec = require('cordova/exec');
 
-var PLUGIN_NAME = "noke";
+var PLUGIN_NAME = "NokeBluetooth";
 
 function NokeBluetooth() {}
 
