@@ -7,8 +7,8 @@
 
     <name>NokeBluetooth</name>
 
-    <js-module name="noke" src="www/NokeBluetooth.js">
-        <clobbers target="cordova.plugins.NokeBluetooth" />
+    <js-module name="NokeBluetooth" src="www/NokeBluetooth.js">
+        <clobbers target="noke" />
     </js-module>
 
     <platform name="ios">
@@ -23,7 +23,7 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="NokeBluetooth">
-                <param name="android-package" value="cordova-plugin-noke-bluetooth.NokeBluetooth" />
+                <param name="android-package" value="com.clearc2.cordova.nokebluetooth.NokeBluetooth" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml">
