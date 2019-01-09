@@ -30,6 +30,8 @@
         <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.BLUETOOTH"/>
         </config-file>
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
             <meta-data android:name="noke-core-api-mobile-key" android:value="eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwidHlwIjoiSldUIn0.eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwiY29tcGFueV91dWlkIjoiN2FlYmI5ODItZTZhOC00YzI2LTg3NTItY2E4NjZmMzNjNzZhIiwiaXNzIjoibm9rZS5jb20ifQ.5eb9b38d6c294e238882703fc7b684e0bba4d28c" />

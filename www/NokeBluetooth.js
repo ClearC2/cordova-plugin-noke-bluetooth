@@ -4,12 +4,12 @@ var PLUGIN_NAME = "NokeBluetooth";
 
 function NokeBluetooth() {}
 
-NokeBluetooth.prototype.start = function(successCallback, errorCallback) {
+NokeBluetooth.prototype.initService = function() {
   exec(
-    successCallback || function() {},
-    errorCallback || function() {},
+    function() {},
+    function() {},
     PLUGIN_NAME,
-    "start"
+    "initService"
   )
 }
 
