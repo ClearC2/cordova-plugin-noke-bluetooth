@@ -21,6 +21,7 @@
     </platform>
 
     <platform name="android">
+        <framework custom="true" src="src/android/noke-sdk.gradle" type="gradleReference" />
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="NokeBluetooth">
                 <param name="android-package" value="com.clearc2.cordova.nokebluetooth.NokeBluetooth" />
@@ -29,6 +30,9 @@
         <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        </config-file>
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <meta-data android:name="noke-core-api-mobile-key" android:value="MOBILE_KEY_HERE" />
         </config-file>
         <source-file src="src/android/NokeBluetooth.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeBluetooth" />
     </platform>
