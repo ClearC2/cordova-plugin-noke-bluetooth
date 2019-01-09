@@ -143,13 +143,13 @@ public class NokeBluetooth extends CordovaPlugin {
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("initService")) {
-            initService(args[0]);
+            initService();
             return true;
         }
         return false;
     };
 
-    private void initService(JSONObject callbacks) {
+    private void initService() {
 		initiateNokeService();
     };
 }
