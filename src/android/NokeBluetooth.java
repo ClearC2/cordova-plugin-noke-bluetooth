@@ -30,7 +30,5 @@ public class NokeBluetooth extends CordovaPlugin {
 		}
     	PluginResult result = new PluginResult(PluginResult.Status.OK, succ);
 		callbackContext.sendPluginResult(result);
-        callbackContext.success(succ);
-        callbackContext.error(fail);
     }
 }
