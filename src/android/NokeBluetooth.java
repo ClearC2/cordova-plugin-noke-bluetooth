@@ -19,7 +19,7 @@ public class NokeBluetooth extends CordovaPlugin {
         return false;
     }
 
-    private void start(final CallbackContext callbackContext) {
+    private void start(CallbackContext callbackContext) {
 		JSONObject succ = new JSONObject();
 		JSONObject fail = new JSONObject();
 		succ.put("message", "success");
