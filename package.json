@@ -1,0 +1,19 @@
+{
+  "name": "cordova-plugin-noke-bluetooth",
+  "version": "1.0.0",
+  "description": "cordova plugin wrapper for noke bluetooth sdk",
+  "cordova": {
+    "id": "cordova-plugin-noke-bluetooth",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "author": "Jacob Allen (jallen@clearc2.com)",
+  "license": "ISC"
+}
