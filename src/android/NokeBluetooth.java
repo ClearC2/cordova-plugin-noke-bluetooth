@@ -30,6 +30,7 @@ public class NokeBluetooth extends CordovaPlugin {
 	private NokeDevice currentNoke;
 
 	CallbackContext onServiceConnected;
+	CallbackContext onServiceConnectFailure;
 	CallbackContext onServiceDisconnected;
 	CallbackContext onNokeDiscovered;
 	CallbackContext onNokeConnecting;
@@ -75,6 +76,7 @@ public class NokeBluetooth extends CordovaPlugin {
         public void onServiceDisconnected(ComponentName classname) {
             mNokeService = null;
             onServiceConnected = null;
+            onServiceConnectFailure = null;
 			onServiceDisconnected = null;
 			onNokeDiscovered = null;
 			onNokeConnecting = null;
@@ -152,5 +154,18 @@ public class NokeBluetooth extends CordovaPlugin {
 
     private void initService(JSONObject listeners) {
 		initiateNokeService();
+		onServiceConnected = listeners.onServiceConnectSuccess;
+		onServiceConnectFailure = listeners.onServiceConnectFailure;
+		onServiceDisconnected = listeners.onServiceDisconnected;
+		onNokeDiscovered = listeners.onNokeDiscovered;
+		onNokeConnecting = listeners.onNokeConnecting;
+		onNokeConnected = listeners.onNokeConnected;
+		onNokeSyncing = listeners.onNokeSyncing;
+		onNokeUnlocked = listeners.onNokeUnlocked;
+		onNokeShutdown = listeners.onNokeShutdown;
+		onNokeDisconnected = listeners.onNokeDisconnected;
+		onDataUploaded = listeners.onDataUploaded;
+		onBluetoothStatusChanged = listeners.onBluetoothStatusChanged;
+		onError = listeners.onNokeError;
     };
 }
