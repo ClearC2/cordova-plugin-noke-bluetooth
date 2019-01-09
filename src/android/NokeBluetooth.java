@@ -25,7 +25,7 @@ import com.noke.nokemobilelibrary.NokeServiceListener;
 
 public class NokeBluetooth extends CordovaPlugin {
 
-	public static final String TAG = 'NOKE'
+	public static final String TAG = "NOKE"
 	private NokeDeviceManagerService mNokeService = null;
 	private NokeDevice currentNoke;
 
@@ -86,7 +86,7 @@ public class NokeBluetooth extends CordovaPlugin {
 			onBluetoothStatusChanged = null;
 			onError = null;
         }
-	}
+	};
 
 	private NokeServiceListener mNokeServiceListener = new NokeServiceListener() {
         @Override
@@ -137,7 +137,6 @@ public class NokeBluetooth extends CordovaPlugin {
         @Override
         public void onError(NokeDevice noke, int error, String message) {
             Log.e(TAG, "NOKE SERVICE ERROR " + error + ": " + message);
-         }
         }
     };
 
