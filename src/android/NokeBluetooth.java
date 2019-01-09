@@ -57,23 +57,27 @@ public class NokeBluetooth extends CordovaPlugin {
 
 	private ServiceConnection mServiceConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder rawBinder) {
-			Log.w(TAG, "ON SERVICE CONNECTED");
-            //Store reference to service
+
             mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(2);
-
-            //Register callback listener
             mNokeService.registerNokeListener(mNokeServiceListener);
-
-            //Start bluetooth scanning
             mNokeService.startScanningForNokeDevices();
             mNokeService.setAllowAllDevices(true);
 
             if (!mNokeService.initialize()) {
-                Log.e(TAG, "Unable to initialize Bluetooth");
+                if (!onServiceConnected != null) {
+            		onServiceConnected();
+            	}
+            } else {
+            	if (!onServiceConnectFailure != null) {
+            		onServiceConnectFailure();
+            	}
             }
         }
 
         public void onServiceDisconnected(ComponentName classname) {
+        	if (!onServiceDisconnected != null) {
+        		onServiceDisconnected();
+        	}
             mNokeService = null;
             onServiceConnected = null;
             onServiceConnectFailure = null;
@@ -94,52 +98,72 @@ public class NokeBluetooth extends CordovaPlugin {
 	private NokeServiceListener mNokeServiceListener = new NokeServiceListener() {
         @Override
         public void onNokeDiscovered(NokeDevice noke) {
-
+			if (!onNokeDiscovered != null) {
+        		onNokeDiscovered(noke);
+        	}
         }
 
         @Override
         public void onNokeConnecting(NokeDevice noke) {
-
+			if (!onNokeConnecting != null) {
+        		onNokeConnecting(noke);
+        	}
         }
 
         @Override
         public void onNokeConnected(NokeDevice noke) {
-
+			if (!onNokeConnected != null) {
+        		onNokeConnected(noke);
+        	}
         }
 
         @Override
         public void onNokeSyncing(NokeDevice noke) {
-
+			if (!onNokeSyncing != null) {
+        		onNokeSyncing(noke);
+        	}
         }
 
         @Override
         public void onNokeUnlocked(NokeDevice noke) {
-
+			if (!onNokeUnlocked != null) {
+        		onNokeUnlocked(noke);
+        	}
         }
 
         @Override
         public void onNokeShutdown(NokeDevice noke, Boolean isLocked, Boolean didTimeout) {
-
+			if (!onNokeShutdown != null) {
+        		onNokeShutdown(noke, isLocked, didTimeout);
+        	}
         }
 
         @Override
         public void onNokeDisconnected(NokeDevice noke) {
-
+			if (!onNokeDisconnected != null) {
+        		onNokeDisconnected(noke);
+        	}
         }
 
         @Override
         public void onDataUploaded(int result, String message) {
-
+			if (!onDataUploaded != null) {
+        		onDataUploaded(result, message);
+        	}
         }
 
         @Override
         public void onBluetoothStatusChanged(int bluetoothStatus) {
-
+			if (!onBluetoothStatusChanged != null) {
+        		onBluetoothStatusChanged(bluetoothStatus);
+        	}
         }
 
         @Override
         public void onError(NokeDevice noke, int error, String message) {
-            Log.e(TAG, "NOKE SERVICE ERROR " + error + ": " + message);
+			if (!onError != null) {
+        		onError(noke, error, message);
+        	}
         }
     };
 
@@ -154,18 +178,18 @@ public class NokeBluetooth extends CordovaPlugin {
 
     private void initService(JSONArray args) {
 		initiateNokeService();
-		onServiceConnected = args.getJSONObject(0);
-		onServiceConnectFailure = args.getJSONObject(1);
-		onServiceDisconnected = args.getJSONObject(2);
-		onNokeDiscovered = args.getJSONObject(3);
-		onNokeConnecting = args.getJSONObject(4);
-		onNokeConnected = args.getJSONObject(5);
-		onNokeSyncing = args.getJSONObject(6);
-		onNokeUnlocked = args.getJSONObject(7);
-		onNokeShutdown = args.getJSONObject(8);
-		onNokeDisconnected = args.getJSONObject(9);
-		onDataUploaded = args.getJSONObject(10);
-		onBluetoothStatusChanged = args.getJSONObject(11);
-		onError = args.getJSONObject(12);
+		onServiceConnected = args[0];
+		onServiceConnectFailure = args[0];
+		onServiceDisconnected = args[0];
+		onNokeDiscovered = args[0];
+		onNokeConnecting = args[0];
+		onNokeConnected = args[0];
+		onNokeSyncing = args[0];
+		onNokeUnlocked = args[0];
+		onNokeShutdown = args[0];
+		onNokeDisconnected = args[0];
+		onDataUploaded = args[0];
+		onBluetoothStatusChanged = args[0];
+		onError = args[0];
     };
 }
