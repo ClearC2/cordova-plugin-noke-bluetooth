@@ -29,19 +29,19 @@ public class NokeBluetooth extends CordovaPlugin {
 	private NokeDeviceManagerService mNokeService = null;
 	private NokeDevice currentNoke;
 
-	CallbackContext onServiceConnected;
-	CallbackContext onServiceConnectFailure;
-	CallbackContext onServiceDisconnected;
-	CallbackContext onNokeDiscovered;
-	CallbackContext onNokeConnecting;
-	CallbackContext onNokeConnected;
-	CallbackContext onNokeSyncing;
-	CallbackContext onNokeUnlocked;
-	CallbackContext onNokeShutdown;
-	CallbackContext onNokeDisconnected;
-	CallbackContext onDataUploaded;
-	CallbackContext onBluetoothStatusChanged;
-	CallbackContext onError;
+	CallbackContext onServiceConnected = null;
+	CallbackContext onServiceConnectFailure = null;
+	CallbackContext onServiceDisconnected = null;
+	CallbackContext onNokeDiscovered = null;
+	CallbackContext onNokeConnecting = null;
+	CallbackContext onNokeConnected = null;
+	CallbackContext onNokeSyncing = null;
+	CallbackContext onNokeUnlocked = null;
+	CallbackContext onNokeShutdown = null;
+	CallbackContext onNokeDisconnected = null;
+	CallbackContext onDataUploaded = null;
+	CallbackContext onBluetoothStatusChanged = null;
+	CallbackContext onError = null;
 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -64,11 +64,11 @@ public class NokeBluetooth extends CordovaPlugin {
             mNokeService.setAllowAllDevices(true);
 
             if (!mNokeService.initialize()) {
-                if (!onServiceConnected != null) {
+                if (onServiceConnected != null) {
             		onServiceConnected();
             	}
             } else {
-            	if (!onServiceConnectFailure != null) {
+            	if (onServiceConnectFailure != null) {
             		onServiceConnectFailure();
             	}
             }
@@ -98,70 +98,70 @@ public class NokeBluetooth extends CordovaPlugin {
 	private NokeServiceListener mNokeServiceListener = new NokeServiceListener() {
         @Override
         public void onNokeDiscovered(NokeDevice noke) {
-			if (!onNokeDiscovered != null) {
+			if (onNokeDiscovered != null) {
         		onNokeDiscovered(noke);
         	}
         }
 
         @Override
         public void onNokeConnecting(NokeDevice noke) {
-			if (!onNokeConnecting != null) {
+			if (onNokeConnecting != null) {
         		onNokeConnecting(noke);
         	}
         }
 
         @Override
         public void onNokeConnected(NokeDevice noke) {
-			if (!onNokeConnected != null) {
+			if (onNokeConnected != null) {
         		onNokeConnected(noke);
         	}
         }
 
         @Override
         public void onNokeSyncing(NokeDevice noke) {
-			if (!onNokeSyncing != null) {
+			if (onNokeSyncing != null) {
         		onNokeSyncing(noke);
         	}
         }
 
         @Override
         public void onNokeUnlocked(NokeDevice noke) {
-			if (!onNokeUnlocked != null) {
+			if (onNokeUnlocked != null) {
         		onNokeUnlocked(noke);
         	}
         }
 
         @Override
         public void onNokeShutdown(NokeDevice noke, Boolean isLocked, Boolean didTimeout) {
-			if (!onNokeShutdown != null) {
+			if (onNokeShutdown != null) {
         		onNokeShutdown(noke, isLocked, didTimeout);
         	}
         }
 
         @Override
         public void onNokeDisconnected(NokeDevice noke) {
-			if (!onNokeDisconnected != null) {
+			if (onNokeDisconnected != null) {
         		onNokeDisconnected(noke);
         	}
         }
 
         @Override
         public void onDataUploaded(int result, String message) {
-			if (!onDataUploaded != null) {
+			if (onDataUploaded != null) {
         		onDataUploaded(result, message);
         	}
         }
 
         @Override
         public void onBluetoothStatusChanged(int bluetoothStatus) {
-			if (!onBluetoothStatusChanged != null) {
+			if (onBluetoothStatusChanged != null) {
         		onBluetoothStatusChanged(bluetoothStatus);
         	}
         }
 
         @Override
         public void onError(NokeDevice noke, int error, String message) {
-			if (!onError != null) {
+			if (onError != null) {
         		onError(noke, error, message);
         	}
         }
@@ -170,26 +170,13 @@ public class NokeBluetooth extends CordovaPlugin {
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("initService")) {
-            initService(args);
+            initService();
             return true;
         }
         return false;
     };
 
-    private void initService(JSONArray args) {
+    private void initService() {
 		initiateNokeService();
-		onServiceConnected = args[0];
-		onServiceConnectFailure = args[0];
-		onServiceDisconnected = args[0];
-		onNokeDiscovered = args[0];
-		onNokeConnecting = args[0];
-		onNokeConnected = args[0];
-		onNokeSyncing = args[0];
-		onNokeUnlocked = args[0];
-		onNokeShutdown = args[0];
-		onNokeDisconnected = args[0];
-		onDataUploaded = args[0];
-		onBluetoothStatusChanged = args[0];
-		onError = args[0];
     };
 }
