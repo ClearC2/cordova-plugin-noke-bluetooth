@@ -58,7 +58,7 @@ public class NokeBluetooth extends CordovaPlugin {
 		public void onServiceConnected(ComponentName className, IBinder rawBinder) {
 			Log.w(TAG, "ON SERVICE CONNECTED");
             //Store reference to service
-            mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService();
+            mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(2);
 
             //Register callback listener
             mNokeService.registerNokeListener(mNokeServiceListener);
