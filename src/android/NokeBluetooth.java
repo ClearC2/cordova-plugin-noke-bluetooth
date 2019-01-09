@@ -49,7 +49,8 @@ public class NokeBluetooth extends CordovaPlugin {
 	}
 
     private void initiateNokeService() {
-	    Intent nokeServiceIntent = new Intent(this, NokeDeviceManagerService.class);
+    	Context context = cordova.getActivity().getApplicationContext();
+	    Intent nokeServiceIntent = new Intent(context, NokeDeviceManagerService.class);
 	    bindService(nokeServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 	}
 
