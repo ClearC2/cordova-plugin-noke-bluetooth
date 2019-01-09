@@ -19,7 +19,23 @@ NokeBluetooth.prototype.initService = function (listeners) {
   if (typeof listeners.onDataUploaded !== 'function') listeners.onDataUploaded = function() {console.log('Noke onDataUploaded')}
   if (typeof listeners.onBluetoothStatusChanged !== 'function') listeners.onBluetoothStatusChanged = function() {console.log('Noke onBluetoothStatusChanged')}
   if (typeof listeners.onNokeError !== 'function') listeners.onNokeError = function() {console.log('Noke onNokeError')}
-  exec(function() {}, function() {}, PLUGIN_NAME, "initService")
+  exec(function() {}, function() {}, PLUGIN_NAME, "initService",
+    [
+      listeners.onServiceConnectSuccess,
+      listeners.onServiceConnectFailure,
+      listeners.onServiceDisconnected,
+      listeners.onNokeDiscovered,
+      listeners.onNokeConnecting,
+      listeners.onNokeConnected,
+      listeners.onNokeSyncing,
+      listeners.onNokeUnlocked,
+      listeners.onNokeShutdown,
+      listeners.onNokeDisconnected,
+      listeners.onDataUploaded,
+      listeners.onBluetoothStatusChanged,
+      listeners.onNokeError,
+    ]
+  )
 }
 
 module.exports = new NokeBluetooth();
