@@ -20,7 +20,7 @@ public class NokeBluetooth extends CordovaPlugin {
 
     private void start(CallbackContext callbackContext) {
         if (true) {
-            callbackContext.success('Start Success');
+            callbackContext.success("Start Success");
         } else {
             callbackContext.error("Start Failure");
         }
