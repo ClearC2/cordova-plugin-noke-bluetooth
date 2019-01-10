@@ -18,6 +18,7 @@
             </feature>
         </config-file>
         <source-file src="src/ios/NokeBluetooth.m" />
+        <framework src="NokeMobileLibrary" type="podspec" spec="~> 0.6.2" />
     </platform>
 
     <platform name="android">
