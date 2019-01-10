@@ -29,9 +29,9 @@ public class NokeBluetooth extends CordovaPlugin {
 	private NokeDeviceManagerService mNokeService = null;
 	private NokeDevice currentNoke;
 
-	CallbackContext onServiceConnected = null;
+	CallbackContext onServiceConnectSuccess = null;
 	CallbackContext onServiceConnectFailure = null;
-	CallbackContext onServiceDisconnected = null;
+	CallbackContext serviceDisconnected = null;
 	CallbackContext onNokeDiscovered = null;
 	CallbackContext onNokeConnecting = null;
 	CallbackContext onNokeConnected = null;
@@ -64,8 +64,8 @@ public class NokeBluetooth extends CordovaPlugin {
             mNokeService.setAllowAllDevices(true);
 
             if (!mNokeService.initialize()) {
-                if (onServiceConnected != null) {
-            		onServiceConnected();
+                if (onServiceConnectSuccess != null) {
+            		onServiceConnectSuccess();
             	}
             } else {
             	if (onServiceConnectFailure != null) {
@@ -75,13 +75,13 @@ public class NokeBluetooth extends CordovaPlugin {
         }
 
         public void onServiceDisconnected(ComponentName classname) {
-        	if (!onServiceDisconnected != null) {
-        		onServiceDisconnected();
+        	if (serviceDisconnected != null) {
+        		serviceDisconnected();
         	}
             mNokeService = null;
-            onServiceConnected = null;
+            onServiceConnectSuccess = null;
             onServiceConnectFailure = null;
-			onServiceDisconnected = null;
+			serviceDisconnected = null;
 			onNokeDiscovered = null;
 			onNokeConnecting = null;
 			onNokeConnected = null;
@@ -173,10 +173,128 @@ public class NokeBluetooth extends CordovaPlugin {
             initService();
             return true;
         }
+
+        if (action.equals("bindOnServiceConnectSuccess")) {
+            bindOnServiceConnectSuccess(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnServiceConnectFailure")) {
+            bindOnServiceConnectFailure(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnServiceDisconnected")) {
+            bindOnServiceDisconnected(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnNokeDiscovered")) {
+            bindOnNokeDiscovered(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnNokeConnecting")) {
+            bindOnNokeConnecting(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnNokeConnected")) {
+            bindOnNokeConnected(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnNokeSyncing")) {
+            bindOnNokeSyncing(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnNokeUnlocked")) {
+            bindOnNokeUnlocked(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnNokeShutdown")) {
+            bindOnNokeShutdown(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnNokeDisconnected")) {
+            bindOnNokeDisconnected(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnDataUploaded")) {
+            bindOnDataUploaded(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnBluetoothStatusChanged")) {
+            bindOnBluetoothStatusChanged(callbackContext);
+            return true;
+        }
+
+        if (action.equals("bindOnNokeError")) {
+            bindOnNokeError(callbackContext);
+            return true;
+        }
+
         return false;
     };
 
     private void initService() {
 		initiateNokeService();
+    };
+
+    private void bindOnServiceConnectSuccess(final CallbackContext callbackContext) {
+		onServiceConnectSuccess = callbackContext;
+    };
+
+    private void bindOnServiceConnectFailure(final CallbackContext callbackContext) {
+		onServiceConnectFailure = callbackContext;
+    };
+
+    private void bindOnServiceDisconnected(final CallbackContext callbackContext) {
+		serviceDisconnected = callbackContext;
+    };
+
+    private void bindOnNokeDiscovered(final CallbackContext callbackContext) {
+		onNokeDiscovered = callbackContext;
+    };
+
+    private void bindOnNokeConnecting(final CallbackContext callbackContext) {
+		onNokeConnecting = callbackContext;
+    };
+
+    private void bindOnNokeConnected(final CallbackContext callbackContext) {
+		onNokeConnected = callbackContext;
+    };
+
+    private void bindOnNokeSyncing(final CallbackContext callbackContext) {
+		onNokeSyncing = callbackContext;
+    };
+
+    private void bindOnNokeUnlocked(final CallbackContext callbackContext) {
+		onNokeUnlocked = callbackContext;
+    };
+
+    private void bindOnNokeShutdown(final CallbackContext callbackContext) {
+		onNokeShutdown = callbackContext;
+    };
+
+    private void bindOnNokeDisconnected(final CallbackContext callbackContext) {
+		onNokeDisconnected = callbackContext;
+    };
+
+    private void bindOnDataUploaded(final CallbackContext callbackContext) {
+		onDataUploaded = callbackContext;
+    };
+
+    private void bindOnBluetoothStatusChanged(final CallbackContext callbackContext) {
+		onBluetoothStatusChanged = callbackContext;
+    };
+
+    private void bindOnNokeError(final CallbackContext callbackContext) {
+		onError = callbackContext;
     };
 }
