@@ -7,12 +7,12 @@
 }
 
 - (void)initService:(CDVInvokedUrlCommand*)command;
+- (void)bindOnNokeDiscovered:(CDVInvokedUrlCommand*)command;
 @end
 
 @implementation NokeBluetooth
 
-- (void)initService:(CDVInvokedUrlCommand*)command
-{
+- (void)initService:(CDVInvokedUrlCommand*)command {
     CDVPluginResult* pluginResult = nil;
     NSLog(@('Init Service Called.'));
     // NSString* echo = [command.arguments objectAtIndex:0];
@@ -24,6 +24,10 @@
     // }
     //
     // [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)bindOnNokeDiscovered:(CDVInvokedUrlCommand*)command {
+  NSLog(@('bindOnNokeDiscovered Called.'));
 }
 
 @end
