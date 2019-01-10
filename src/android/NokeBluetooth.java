@@ -61,15 +61,15 @@ public class NokeBluetooth extends CordovaPlugin {
             mNokeService.setAllowAllDevices(true);
 
             if (!mNokeService.initialize()) {
-                Log.d(TAG, 'Noke Service Initialized.')
+                Log.d(TAG, "Noke Service Initialized.");
             } else {
-            	Log.d(TAG, 'Noke Service Initialization Failed.')
+            	Log.d(TAG, "Noke Service Initialization Failed.");
             }
         }
 
         public void onServiceDisconnected(ComponentName classname) {
         	if (serviceDisconnected != null) {
-        		Log.d(TAG, 'Noke Service Disconnected.')
+        		Log.d(TAG, "Noke Service Disconnected.");
         	}
             mNokeService = null;
 			onNokeDiscovered = null;
