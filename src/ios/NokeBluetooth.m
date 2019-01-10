@@ -14,7 +14,7 @@
 
 - (void)initService:(CDVInvokedUrlCommand*)command {
     CDVPluginResult* pluginResult = nil;
-    NSLog(@('Init Service Called.'));
+    NSLog(@'Init Service Called.');
     // NSString* echo = [command.arguments objectAtIndex:0];
     //
     // if (echo != nil && [echo length] > 0) {
@@ -27,7 +27,7 @@
 }
 
 - (void)bindOnNokeDiscovered:(CDVInvokedUrlCommand*)command {
-  NSLog(@('bindOnNokeDiscovered Called.'));
+  NSLog(@'bindOnNokeDiscovered Called.');
 }
 
 @end
