@@ -6,9 +6,6 @@ function NokeBluetooth() {}
 
 NokeBluetooth.prototype.initService = function (listeners) {
   if (!listeners) listeners = {}
-  if (typeof listeners.onServiceConnectSuccess !== 'function') listeners.onServiceConnectSuccess = function() {console.log('Noke onServiceConnectSuccess')}
-  if (typeof listeners.onServiceConnectFailure !== 'function') listeners.onServiceConnectFailure = function() {console.log('Noke onServiceConnectFailure')}
-  if (typeof listeners.onServiceDisconnected !== 'function') listeners.onServiceDisconnected = function() {console.log('Noke onServiceDisconnected')}
   if (typeof listeners.onNokeDiscovered !== 'function') listeners.onNokeDiscovered = function() {console.log('Noke onNokeDiscovered')}
   if (typeof listeners.onNokeConnecting !== 'function') listeners.onNokeConnecting = function() {console.log('Noke onNokeConnecting')}
   if (typeof listeners.onNokeConnected !== 'function') listeners.onNokeConnected = function() {console.log('Noke onNokeConnected')}
@@ -20,9 +17,6 @@ NokeBluetooth.prototype.initService = function (listeners) {
   if (typeof listeners.onBluetoothStatusChanged !== 'function') listeners.onBluetoothStatusChanged = function() {console.log('Noke onBluetoothStatusChanged')}
   if (typeof listeners.onNokeError !== 'function') listeners.onNokeError = function() {console.log('Noke onNokeError')}
   exec(function() {}, function() {}, PLUGIN_NAME, "initService")
-  NokeBluetooth.bindOnServiceConnectSuccess(listeners.onServiceConnectSuccess)
-  NokeBluetooth.bindOnServiceConnectFailure(listeners.onServiceConnectFailure)
-  NokeBluetooth.bindOnServiceDisconnected(listeners.onServiceDisconnected)
   NokeBluetooth.bindOnNokeDiscovered(listeners.onNokeDiscovered)
   NokeBluetooth.bindOnNokeConnecting(listeners.onNokeConnecting)
   NokeBluetooth.bindOnNokeConnected(listeners.onNokeConnected)
@@ -33,24 +27,6 @@ NokeBluetooth.prototype.initService = function (listeners) {
   NokeBluetooth.bindOnDataUploaded(listeners.onDataUploaded)
   NokeBluetooth.bindOnBluetoothStatusChanged(listeners.onBluetoothStatusChanged)
   NokeBluetooth.bindOnNokeError(listeners.onNokeError)
-}
-
-NokeBluetooth.prototype.bindOnServiceConnectSuccess = function (fn, er) {
-  if (typeof fn !== 'function') fn = function() {console.log('Noke onServiceConnectSuccess')}
-  if (typeof er !== 'function') er = function() {console.log('ERROR: onServiceConnectSuccess')}
-  exec(fn, er, PLUGIN_NAME, "bindOnServiceConnectSuccess")
-}
-
-NokeBluetooth.prototype.bindOnServiceConnectFailure = function (fn, er) {
-  if (typeof fn !== 'function') fn = function() {console.log('Noke bindOnServiceConnectFailure')}
-  if (typeof er !== 'function') er = function() {console.log('ERROR: bindOnServiceConnectFailure')}
-  exec(fn, er, PLUGIN_NAME, "bindOnServiceConnectFailure")
-}
-
-NokeBluetooth.prototype.bindOnServiceDisconnected = function (fn, er) {
-  if (typeof fn !== 'function') fn = function() {console.log('Noke bindOnServiceDisconnected')}
-  if (typeof er !== 'function') er = function() {console.log('ERROR: bindOnServiceDisconnected')}
-  exec(fn, er, PLUGIN_NAME, "bindOnServiceDisconnected")
 }
 
 NokeBluetooth.prototype.bindOnNokeDiscovered = function (fn, er) {

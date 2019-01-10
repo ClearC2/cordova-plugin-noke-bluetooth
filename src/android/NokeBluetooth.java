@@ -72,9 +72,6 @@ public class NokeBluetooth extends CordovaPlugin {
         		Log.d(TAG, 'Noke Service Disconnected.')
         	}
             mNokeService = null;
-            onServiceConnectSuccess = null;
-            onServiceConnectFailure = null;
-			serviceDisconnected = null;
 			onNokeDiscovered = null;
 			onNokeConnecting = null;
 			onNokeConnected = null;
@@ -167,21 +164,6 @@ public class NokeBluetooth extends CordovaPlugin {
             return true;
         }
 
-        if (action.equals("bindOnServiceConnectSuccess")) {
-            bindOnServiceConnectSuccess(callbackContext);
-            return true;
-        }
-
-        if (action.equals("bindOnServiceConnectFailure")) {
-            bindOnServiceConnectFailure(callbackContext);
-            return true;
-        }
-
-        if (action.equals("bindOnServiceDisconnected")) {
-            bindOnServiceDisconnected(callbackContext);
-            return true;
-        }
-
         if (action.equals("bindOnNokeDiscovered")) {
             bindOnNokeDiscovered(callbackContext);
             return true;
@@ -237,18 +219,6 @@ public class NokeBluetooth extends CordovaPlugin {
 
     private void initService() {
 		initiateNokeService();
-    };
-
-    private void bindOnServiceConnectSuccess(final CallbackContext callbackContext) {
-		onServiceConnectSuccess = callbackContext;
-    };
-
-    private void bindOnServiceConnectFailure(final CallbackContext callbackContext) {
-		onServiceConnectFailure = callbackContext;
-    };
-
-    private void bindOnServiceDisconnected(final CallbackContext callbackContext) {
-		serviceDisconnected = callbackContext;
     };
 
     private void bindOnNokeDiscovered(final CallbackContext callbackContext) {
