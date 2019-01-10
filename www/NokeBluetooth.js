@@ -4,6 +4,8 @@ var PLUGIN_NAME = "NokeBluetooth";
 
 function NokeBluetooth() {}
 
+var plugin = new NokeBluetooth()
+
 NokeBluetooth.prototype.initService = function (listeners) {
   if (!listeners) listeners = {}
   if (typeof listeners.onNokeDiscovered !== 'function') listeners.onNokeDiscovered = function() {console.log('Noke onNokeDiscovered')}
@@ -17,16 +19,16 @@ NokeBluetooth.prototype.initService = function (listeners) {
   if (typeof listeners.onBluetoothStatusChanged !== 'function') listeners.onBluetoothStatusChanged = function() {console.log('Noke onBluetoothStatusChanged')}
   if (typeof listeners.onNokeError !== 'function') listeners.onNokeError = function() {console.log('Noke onNokeError')}
   exec(function() {}, function() {}, PLUGIN_NAME, "initService")
-  NokeBluetooth.bindOnNokeDiscovered(listeners.onNokeDiscovered)
-  NokeBluetooth.bindOnNokeConnecting(listeners.onNokeConnecting)
-  NokeBluetooth.bindOnNokeConnected(listeners.onNokeConnected)
-  NokeBluetooth.bindOnNokeSyncing(listeners.onNokeSyncing)
-  NokeBluetooth.bindOnNokeUnlocked(listeners.onNokeUnlocked)
-  NokeBluetooth.bindOnNokeShutdown(listeners.onNokeShutdown)
-  NokeBluetooth.bindOnNokeDisconnected(listeners.onNokeDisconnected)
-  NokeBluetooth.bindOnDataUploaded(listeners.onDataUploaded)
-  NokeBluetooth.bindOnBluetoothStatusChanged(listeners.onBluetoothStatusChanged)
-  NokeBluetooth.bindOnNokeError(listeners.onNokeError)
+  plugin.bindOnNokeDiscovered(listeners.onNokeDiscovered)
+  plugin.bindOnNokeConnecting(listeners.onNokeConnecting)
+  plugin.bindOnNokeConnected(listeners.onNokeConnected)
+  plugin.bindOnNokeSyncing(listeners.onNokeSyncing)
+  plugin.bindOnNokeUnlocked(listeners.onNokeUnlocked)
+  plugin.bindOnNokeShutdown(listeners.onNokeShutdown)
+  plugin.bindOnNokeDisconnected(listeners.onNokeDisconnected)
+  plugin.bindOnDataUploaded(listeners.onDataUploaded)
+  plugin.bindOnBluetoothStatusChanged(listeners.onBluetoothStatusChanged)
+  plugin.bindOnNokeError(listeners.onNokeError)
 }
 
 NokeBluetooth.prototype.bindOnNokeDiscovered = function (fn, er) {
@@ -88,4 +90,4 @@ NokeBluetooth.prototype.bindOnNokeError = function (fn, er) {
   exec(fn, er, PLUGIN_NAME, "bindOnNokeError")
 }
 
-module.exports = new NokeBluetooth();
+module.exports = plugin;
