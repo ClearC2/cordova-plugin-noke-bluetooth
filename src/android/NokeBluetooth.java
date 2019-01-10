@@ -70,16 +70,6 @@ public class NokeBluetooth extends CordovaPlugin {
         public void onServiceDisconnected(ComponentName classname) {
         	Log.d(TAG, "Noke Service Disconnected.");
             mNokeService = null;
-			onNokeDiscovered = null;
-			onNokeConnecting = null;
-			onNokeConnected = null;
-			onNokeSyncing = null;
-			onNokeUnlocked = null;
-			onNokeShutdown = null;
-			onNokeDisconnected = null;
-			onDataUploaded = null;
-			onBluetoothStatusChanged = null;
-			onError = null;
         }
 	};
 
