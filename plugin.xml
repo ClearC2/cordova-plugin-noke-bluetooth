@@ -19,7 +19,7 @@
         </config-file>
         <header-file src="src/ios/NokeBluetooth.h" />
         <source-file src="src/ios/NokeBluetooth.swift" />
-        <!-- <framework src="NokeMobileLibrary" type="podspec" spec="~> 0.6.2" /> -->
+        <framework src="NokeMobileLibrary" type="podspec" spec="~> 0.6.3" />
     </platform>
 
     <platform name="android">
