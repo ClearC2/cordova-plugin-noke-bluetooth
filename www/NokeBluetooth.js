@@ -6,8 +6,17 @@ function NokeBluetooth() {}
 
 var plugin = new NokeBluetooth()
 
+NokeBluetooth.prototype.sendCommands = function (id, command, succ, err) {
+  if (!id) id = '00:00:00:00:00:00'
+  if (!command) command = ''
+  if (typeof succ !== 'function') succ = function(id) {console.log('Noke command sent to ' + id + ' successfully.')}
+  if (typeof err !== 'function') err = function(id) {console.log('Noke command failed to send to ' + id)}
+  exec(succ, err, PLUGIN_NAME, "sendCommands", [id, command])
+}
+
 NokeBluetooth.prototype.initService = function (listeners) {
   if (!listeners) listeners = {}
+  if (typeof listeners.onNokeInit !== 'function') listeners.onNokeDiscovered = function() {console.log('Noke onInit')}
   if (typeof listeners.onNokeDiscovered !== 'function') listeners.onNokeDiscovered = function() {console.log('Noke onNokeDiscovered')}
   if (typeof listeners.onNokeConnecting !== 'function') listeners.onNokeConnecting = function() {console.log('Noke onNokeConnecting')}
   if (typeof listeners.onNokeConnected !== 'function') listeners.onNokeConnected = function() {console.log('Noke onNokeConnected')}
@@ -18,6 +27,7 @@ NokeBluetooth.prototype.initService = function (listeners) {
   if (typeof listeners.onDataUploaded !== 'function') listeners.onDataUploaded = function() {console.log('Noke onDataUploaded')}
   if (typeof listeners.onBluetoothStatusChanged !== 'function') listeners.onBluetoothStatusChanged = function() {console.log('Noke onBluetoothStatusChanged')}
   if (typeof listeners.onNokeError !== 'function') listeners.onNokeError = function() {console.log('Noke onNokeError')}
+  plugin.bindOnNokeInit(listeners.onNokeInit)
   exec(function() {}, function() {}, PLUGIN_NAME, "initService")
   plugin.bindOnNokeDiscovered(listeners.onNokeDiscovered)
   plugin.bindOnNokeConnecting(listeners.onNokeConnecting)
@@ -29,6 +39,12 @@ NokeBluetooth.prototype.initService = function (listeners) {
   plugin.bindOnDataUploaded(listeners.onDataUploaded)
   plugin.bindOnBluetoothStatusChanged(listeners.onBluetoothStatusChanged)
   plugin.bindOnNokeError(listeners.onNokeError)
+}
+
+NokeBluetooth.prototype.bindOnNokeInit = function (fn, er) {
+  if (typeof fn !== 'function') fn = function() {console.log('Noke bindOnNokeInit')}
+  if (typeof er !== 'function') er = function() {console.log('ERROR: bindOnNokeInit')}
+  exec(fn, er, PLUGIN_NAME, "bindOnNokeInit")
 }
 
 NokeBluetooth.prototype.bindOnNokeDiscovered = function (fn, er) {
@@ -84,6 +100,7 @@ NokeBluetooth.prototype.bindOnBluetoothStatusChanged = function (fn, er) {
   if (typeof er !== 'function') er = function() {console.log('ERROR: bindOnBluetoothStatusChanged')}
   exec(fn, er, PLUGIN_NAME, "bindOnBluetoothStatusChanged")
 }
+
 NokeBluetooth.prototype.bindOnNokeError = function (fn, er) {
   if (typeof fn !== 'function') fn = function() {console.log('Noke bindOnNokeError')}
   if (typeof er !== 'function') er = function() {console.log('ERROR: bindOnNokeError')}

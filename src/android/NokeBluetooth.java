@@ -27,8 +27,10 @@ public class NokeBluetooth extends CordovaPlugin {
 
 	public static final String TAG = "Noke";
 	private NokeDeviceManagerService mNokeService = null;
-	private NokeDevice currentNoke;
+	// private JSONObject NokeDevices = new JSONObject();
+	private NokeDevice currentLock = null;
 
+	CallbackContext onNokeInitCallback = null;
 	CallbackContext onNokeDiscoveredCallback = null;
 	CallbackContext onNokeConnectingCallback = null;
 	CallbackContext onNokeConnectedCallback = null;
@@ -105,20 +107,31 @@ public class NokeBluetooth extends CordovaPlugin {
 				try {
 					info.put("mac", noke.getMac());
 					info.put("session", noke.getSession());
+					info.put("name", noke.getName());
+					info.put("serial", noke.getSerial());
+					info.put("version", noke.getVersion());
+					info.put("battery", noke.getBattery());
+					info.put("trackingkey", noke.getTrackingKey());
+					info.put("connectionstate", noke.getConnectionState());
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				PluginResult result = new PluginResult(PluginResult.Status.OK, info);
 				result.setKeepCallback(true);
 				onNokeConnectedCallback.sendPluginResult(result);
-				noke.offlineUnlock();
     	}
+			// try {
+			// 	NokeDevices.put(noke.getMac(), noke);
+			// } catch (JSONException e) {
+			// 	e.printStackTrace();
+			// }
+			currentLock = noke;
     }
 
     @Override
     public void onNokeSyncing(NokeDevice noke) {
 			if (onNokeSyncingCallback != null) {
-				PluginResult result = new PluginResult(PluginResult.Status.OK, "ON SYNC PAYLOAD");
+				PluginResult result = new PluginResult(PluginResult.Status.OK);
 				result.setKeepCallback(true);
 				onNokeSyncingCallback.sendPluginResult(result);
     	}
@@ -126,8 +139,9 @@ public class NokeBluetooth extends CordovaPlugin {
 
     @Override
     public void onNokeUnlocked(NokeDevice noke) {
+			Log.d(TAG, "Noke on unlock - " + noke.getLockState());
 			if (onNokeUnlockedCallback != null) {
-				PluginResult result = new PluginResult(PluginResult.Status.OK, "ON UNLOCK PAYLOAD");
+				PluginResult result = new PluginResult(PluginResult.Status.OK, noke.getLockState());
 				result.setKeepCallback(true);
 				onNokeUnlockedCallback.sendPluginResult(result);
     	}
@@ -135,8 +149,9 @@ public class NokeBluetooth extends CordovaPlugin {
 
     @Override
     public void onNokeShutdown(NokeDevice noke, Boolean isLocked, Boolean didTimeout) {
+			Log.d(TAG, "Noke Shutdown - " + isLocked + ' ' + didTimeout);
 			if (onNokeShutdownCallback != null) {
-				PluginResult result = new PluginResult(PluginResult.Status.OK, "ON SHUTDOWN PAYLOAD");
+				PluginResult result = new PluginResult(PluginResult.Status.OK, noke.getMac());
 				result.setKeepCallback(true);
 				onNokeShutdownCallback.sendPluginResult(result);
     	}
@@ -145,10 +160,12 @@ public class NokeBluetooth extends CordovaPlugin {
     @Override
     public void onNokeDisconnected(NokeDevice noke) {
 			if (onNokeDisconnectedCallback != null) {
-				PluginResult result = new PluginResult(PluginResult.Status.OK, "ON DISCONNECT PAYLOAD");
+				PluginResult result = new PluginResult(PluginResult.Status.OK, noke.getMac());
 				result.setKeepCallback(true);
 				onNokeDisconnectedCallback.sendPluginResult(result);
     	}
+			// NokeDevices.remove(noke.getMac());
+			currentLock = null;
     }
 
     @Override
@@ -171,6 +188,7 @@ public class NokeBluetooth extends CordovaPlugin {
 
     @Override
     public void onError(NokeDevice noke, int error, String message) {
+			Log.d(TAG, "Noke ERROR - " + error + ' ' + message);
 			if (onErrorCallback != null) {
 				JSONObject info = new JSONObject();
 				try {
@@ -190,9 +208,34 @@ public class NokeBluetooth extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
     if (action.equals("initService")) {
-      initService();
+			if (mNokeService == null) {
+				initService();
+			}
+			if (onNokeInitCallback != null) {
+				PluginResult result = new PluginResult(PluginResult.Status.OK);
+				result.setKeepCallback(true);
+				onNokeInitCallback.sendPluginResult(result);
+			}
       return true;
     }
+
+		if (action.equals("sendCommands")) {
+			String id = args.getString(0);
+			String commands = args.getString(1);
+			if (currentLock != null) {
+				Log.d(TAG, "RECIEVED THIS COMMAND STRING FROM API - SENDING TO DEVICE: " + commands);
+				currentLock.sendCommands(commands);
+				callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, id));
+    	} else {
+				callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, id));
+			}
+			return true;
+		}
+
+		if (action.equals("bindOnNokeInit")) {
+			bindOnNokeInit(callbackContext);
+			return true;
+		}
 
     if (action.equals("bindOnNokeDiscovered")) {
       bindOnNokeDiscovered(callbackContext);
@@ -250,6 +293,10 @@ public class NokeBluetooth extends CordovaPlugin {
   private void initService() {
 		initiateNokeService();
   };
+
+	private void bindOnNokeInit(final CallbackContext callbackContext) {
+		onNokeInitCallback = callbackContext;
+	}
 
   private void bindOnNokeDiscovered(final CallbackContext callbackContext) {
 		onNokeDiscoveredCallback = callbackContext;
