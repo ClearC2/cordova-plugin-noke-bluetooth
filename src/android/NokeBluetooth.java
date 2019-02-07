@@ -56,7 +56,7 @@ public class NokeBluetooth extends CordovaPlugin {
 	private ServiceConnection mServiceConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder rawBinder) {
 
-      mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(1);
+      mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(0);
       mNokeService.registerNokeListener(mNokeServiceListener);
       mNokeService.startScanningForNokeDevices();
       mNokeService.setAllowAllDevices(true);
@@ -188,7 +188,6 @@ public class NokeBluetooth extends CordovaPlugin {
 
     @Override
     public void onError(NokeDevice noke, int error, String message) {
-			Log.d(TAG, "Noke ERROR - " + error + ' ' + message);
 			if (onErrorCallback != null) {
 				JSONObject info = new JSONObject();
 				try {
