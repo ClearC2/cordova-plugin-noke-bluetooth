@@ -30,8 +30,8 @@ func consolelog(_ message: String){
               "endDate": "10/04/2015 16:00"
           ]
       ]
-
       result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonObject)
+      result.setKeepCallbackAs(true)
       commandDelegate!.send(result, callbackId: onDiscoId)
       NokeDeviceManager.shared().stopScan()
       NokeDeviceManager.shared().connectToNokeDevice(noke)
