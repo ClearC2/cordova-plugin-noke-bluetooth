@@ -4,20 +4,19 @@ func consolelog(_ message: String){
     NSLog("%@ - %@", "Noke", message)
 }
 
-@objc(NokeBluetooth) class NokeBluetooth : CDVPlugin {
+@objc(NokeBluetooth) class NokeBluetooth : CDVPlugin, NokeDeviceManagerDelegate {
     func initService(_ command: CDVInvokedUrlCommand) {
-        consolelog("initService fired")
-        // NokeDeviceManager.shared().setAPIKey("eyJhbGciOiJOT0tFX1BSSVZBVEVfU0FOREJPWCIsInR5cCI6IkpXVCJ9.eyJhbGciOiJOT0tFX1BSSVZBVEVfU0FOREJPWCIsImNvbXBhbnlfdXVpZCI6IjdhZWJiOTgyLWU2YTgtNGMyNi04NzUyLWNhODY2ZjMzYzc2YSIsImlzcyI6Im5va2UuY29tIn0.786e0e298707cd68d91fd85f0da3e803d0cb3cd6") //PRODUCTION
-        // NokeDeviceManager.shared().setLibraryMode(NokeLibraryMode.PRODUCTION)
-        NokeDeviceManager.shared().setAPIKey("eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwidHlwIjoiSldUIn0.eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwiY29tcGFueV91dWlkIjoiN2FlYmI5ODItZTZhOC00YzI2LTg3NTItY2E4NjZmMzNjNzZhIiwiaXNzIjoibm9rZS5jb20ifQ.5eb9b38d6c294e238882703fc7b684e0bba4d28c") //SANDBOX
-        NokeDeviceManager.shared().setLibraryMode(NokeLibraryMode.SANDBOX)
-        NokeDeviceManager.shared().setAllowAllNokeDevices(true)
-        NokeDeviceManager.shared().delegate = self as? NokeDeviceManagerDelegate
+      // NokeDeviceManager.shared().setAPIKey("eyJhbGciOiJOT0tFX1BSSVZBVEVfU0FOREJPWCIsInR5cCI6IkpXVCJ9.eyJhbGciOiJOT0tFX1BSSVZBVEVfU0FOREJPWCIsImNvbXBhbnlfdXVpZCI6IjdhZWJiOTgyLWU2YTgtNGMyNi04NzUyLWNhODY2ZjMzYzc2YSIsImlzcyI6Im5va2UuY29tIn0.786e0e298707cd68d91fd85f0da3e803d0cb3cd6") //PRODUCTION
+      // NokeDeviceManager.shared().setLibraryMode(NokeLibraryMode.PRODUCTION)
+      NokeDeviceManager.shared().setAPIKey("eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwidHlwIjoiSldUIn0.eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwiY29tcGFueV91dWlkIjoiN2FlYmI5ODItZTZhOC00YzI2LTg3NTItY2E4NjZmMzNjNzZhIiwiaXNzIjoibm9rZS5jb20ifQ.5eb9b38d6c294e238882703fc7b684e0bba4d28c") //SANDBOX
+      NokeDeviceManager.shared().setLibraryMode(NokeLibraryMode.SANDBOX)
+      NokeDeviceManager.shared().setAllowAllNokeDevices(true)
+      NokeDeviceManager.shared().delegate = self
     }
 
     func nokeDeviceDidUpdateState(to state: NokeDeviceConnectionState, noke: NokeDevice) {
 
-    switch state {
+      switch state {
         case .nokeDeviceConnectionStateDiscovered:
             consolelog("Nokē Discovered")
             break
@@ -34,52 +33,79 @@ func consolelog(_ message: String){
             consolelog("Nokē Disconnected")
             break
         default:
-            consolelog("Unrecognized State")
+            consolelog("UNRECOGNIZED NOKE DEVICE STATE")
             break
         }
     }
 
+    func bluetoothManagerDidUpdateState(state: NokeManagerBluetoothState) {
+      switch (state) {
+        case NokeManagerBluetoothState.poweredOn:
+            consolelog("NOKE BLUETOOTH MANAGER ON")
+            NokeDeviceManager.shared().startScanForNokeDevices()
+            break
+        case NokeManagerBluetoothState.poweredOff:
+            consolelog("NOKE BLUETOOTH MANAGER OFF")
+            break
+        default:
+            consolelog("UNRECOGNIZED BLUETOOTH MANAGER STATE")
+            break
+        }
+    }
+
+    func nokeDeviceDidShutdown(noke: NokeDevice, isLocked: Bool, didTimeout: Bool) {
+      // consolelog("noke device did shutdown")
+    }
+
+    func didUploadData(result: Int, message: String) {
+      // consolelog("noke did upload data")
+    }
+
+    func bindOnNokeInit(_ command: CDVInvokedUrlCommand) {
+      // consolelog("bindOnNokeInit fired")
+    }
+
     func nokeErrorDidOccur(error: NokeDeviceManagerError, message: String, noke: NokeDevice?) {
-      consolelog("nokeErrorDidOccur")
+      // consolelog("nokeErrorDidOccur")
     }
 
     func bindOnNokeDiscovered(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnNokeDiscovered fired")
+      // consolelog("bindOnNokeDiscovered fired")
     }
 
     func bindOnNokeConnecting(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnNokeConnecting fired")
+      // consolelog("bindOnNokeConnecting fired")
     }
 
     func bindOnNokeConnected(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnNokeConnected fired")
+      // consolelog("bindOnNokeConnected fired")
     }
 
     func bindOnNokeSyncing(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnNokeSyncing fired")
+      // consolelog("bindOnNokeSyncing fired")
     }
 
     func bindOnNokeUnlocked(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnNokeUnlocked fired")
+      // consolelog("bindOnNokeUnlocked fired")
     }
 
     func bindOnNokeShutdown(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnNokeShutdown fired")
+      // consolelog("bindOnNokeShutdown fired")
     }
 
     func bindOnNokeDisconnected(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnNokeDisconnected fired")
+      // consolelog("bindOnNokeDisconnected fired")
     }
 
     func bindOnDataUploaded(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnDataUploaded fired")
+      // consolelog("bindOnDataUploaded fired")
     }
 
     func bindOnBluetoothStatusChanged(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnBluetoothStatusChanged fired")
+      // consolelog("bindOnBluetoothStatusChanged fired")
     }
 
     func bindOnNokeError(_ command: CDVInvokedUrlCommand) {
-        consolelog("bindOnNokeError fired")
+      // consolelog("bindOnNokeError fired")
     }
 }
