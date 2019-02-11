@@ -173,6 +173,19 @@ func consolelog(_ message: String){
     }
   }
 
+  func sendCommands (_ command: CDVInvokedUrlCommand) {
+    let commands = command.arguments[1] as? String ?? ""
+    let id = command.arguments[0] as? String ?? ""
+    let result: CDVPluginResult
+    if (currentNoke != nil) {
+      currentNoke?.sendCommands(commands)
+      result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: id)
+    } else {
+      result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: id)
+    }
+    commandDelegate!.send(result, callbackId: command.callbackId)
+  }
+
   func bindOnNokeInit(_ command: CDVInvokedUrlCommand) {
     onNokeInitCallback = command.callbackId
   }
