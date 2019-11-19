@@ -170,6 +170,7 @@ public class NokeBluetooth extends CordovaPlugin {
 
     @Override
     public void onDataUploaded(int result, String message) {
+            Log.d(TAG, message);
 			if (onDataUploadedCallback != null) {
 				PluginResult presult = new PluginResult(PluginResult.Status.OK, "ON DATA UPLOAD PAYLOAD");
 				presult.setKeepCallback(true);
