@@ -34,12 +34,21 @@
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.BLUETOOTH"/>
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
         </config-file>
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <service android:name="com.noke.nokemobilelibrary.NokeDeviceManagerService" android:enabled="true"/>
+            <service android:name="com.noke.nokemobilelibrary.NokeDeviceManagerService" android:enabled="true" />
             <!-- <meta-data android:name="noke-core-api-mobile-key" android:value="eyJhbGciOiJOT0tFX1BSSVZBVEVfU0FOREJPWCIsInR5cCI6IkpXVCJ9.eyJhbGciOiJOT0tFX1BSSVZBVEVfU0FOREJPWCIsImNvbXBhbnlfdXVpZCI6IjdhZWJiOTgyLWU2YTgtNGMyNi04NzUyLWNhODY2ZjMzYzc2YSIsImlzcyI6Im5va2UuY29tIn0.786e0e298707cd68d91fd85f0da3e803d0cb3cd6" /> -->
             <meta-data android:name="noke-core-api-mobile-key" android:value="eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwidHlwIjoiSldUIn0.eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwiY29tcGFueV91dWlkIjoiN2FlYmI5ODItZTZhOC00YzI2LTg3NTItY2E4NjZmMzNjNzZhIiwiaXNzIjoibm9rZS5jb20ifQ.5eb9b38d6c294e238882703fc7b684e0bba4d28c" />
         </config-file>
+        <source-file src="src/android/AesLibrary.java" target-dir="src/cordova-plugin-noke-bluetooth/AesLibrary" />
+        <source-file src="src/android/NokeDefines.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeDefines" />
+        <source-file src="src/android/NokeDevice.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeDevice" />
+        <source-file src="src/android/NokeDeviceManagerService.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeDeviceManagerService" />
+        <source-file src="src/android/NokeMobileApiClient.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeMobileApiClient" />
+        <source-file src="src/android/NokeMobileError.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeMobileError" />
+        <source-file src="src/android/NokeServiceListener.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeServiceListener" />
+        <source-file src="src/android/NokeServiceListenerAdapter.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeServiceListenerAdapter" />
         <source-file src="src/android/NokeBluetooth.java" target-dir="src/cordova-plugin-noke-bluetooth/NokeBluetooth" />
     </platform>
 </plugin>

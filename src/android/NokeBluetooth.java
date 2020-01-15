@@ -55,7 +55,6 @@ public class NokeBluetooth extends CordovaPlugin {
 
   private ServiceConnection mServiceConnection = new ServiceConnection() {
     public void onServiceConnected(ComponentName className, IBinder rawBinder) {
-
       mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(0);
       mNokeService.registerNokeListener(mNokeServiceListener);
       mNokeService.startScanningForNokeDevices();
@@ -168,20 +167,12 @@ public class NokeBluetooth extends CordovaPlugin {
 
     @Override
     public void onDataUploaded(int result, String message) {
-<<<<<<< HEAD
-            Log.d(TAG, message);
-			if (onDataUploadedCallback != null) {
-				PluginResult presult = new PluginResult(PluginResult.Status.OK, "ON DATA UPLOAD PAYLOAD");
-				presult.setKeepCallback(true);
-				onDataUploadedCallback.sendPluginResult(presult);
-    	}
-=======
-      if (onDataUploadedCallback != null) {
-        PluginResult presult = new PluginResult(PluginResult.Status.OK);
-        presult.setKeepCallback(true);
-        onDataUploadedCallback.sendPluginResult(presult);
-      }
->>>>>>> b81f83173f92761b36938907f884e57d6ac99c60
+        Log.d(TAG, message);
+        if (onDataUploadedCallback != null) {
+            PluginResult presult = new PluginResult(PluginResult.Status.OK, "ON DATA UPLOAD PAYLOAD");
+            presult.setKeepCallback(true);
+            onDataUploadedCallback.sendPluginResult(presult);
+        }
     }
 
     @Override
