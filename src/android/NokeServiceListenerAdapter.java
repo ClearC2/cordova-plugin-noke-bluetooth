@@ -23,6 +23,11 @@ import android.util.Log;
 public class NokeServiceListenerAdapter implements NokeServiceListener{
 
     @Override
+    public void stopScanning(NokeDevice noke) {
+        //empty default implementation
+    }
+
+    @Override
     public void onNokeDiscovered(NokeDevice noke) {
         //empty default implementation
     }
