@@ -6,6 +6,12 @@ function NokeBluetooth() {}
 
 var plugin = new NokeBluetooth()
 
+NokeBluetooth.prototype.stopScanning = function (succ, err) {
+  if (typeof succ !== 'function') succ = function() {console.log('Stopped scanning for Noke devices.')}
+  if (typeof err !== 'function') err = function() {console.log('Noke device failed to stop scanning for devices.')}
+  exec(succ, err, PLUGIN_NAME, "stopScanning")
+}
+
 NokeBluetooth.prototype.sendCommands = function (id, command, succ, err) {
   if (!id) id = '00:00:00:00:00:00'
   if (!command) command = ''

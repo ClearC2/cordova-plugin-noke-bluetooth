@@ -20,8 +20,6 @@ package com.noke.nokemobilelibrary;
 
 public interface NokeServiceListener  {
 
-    void stopScanning(NokeDevice noke);
-
     void onNokeDiscovered(NokeDevice noke);
 
     void onNokeConnecting(NokeDevice noke);
