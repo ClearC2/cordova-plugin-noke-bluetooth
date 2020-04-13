@@ -30,7 +30,7 @@ public class NokeBluetooth extends CordovaPlugin {
   // private JSONObject NokeDevices = new JSONObject();
   private NokeDevice currentLock = null;
 
-  CallbackContext stopScanningCallback = null;
+  CallbackContext resumeScanningCallback = null;
   CallbackContext onNokeInitCallback = null;
   CallbackContext onNokeDiscoveredCallback = null;
   CallbackContext onNokeConnectingCallback = null;
@@ -304,7 +304,7 @@ public class NokeBluetooth extends CordovaPlugin {
     initiateNokeService();
   };
 
-  private void stopScanning(final CallbackContext callbackContext) {
+  private void resumeScanning(final CallbackContext callbackContext) {
     stopScanningCallback = callbackContext;
   };
 
