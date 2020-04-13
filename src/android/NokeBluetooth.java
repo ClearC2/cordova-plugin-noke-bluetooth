@@ -78,6 +78,7 @@ public class NokeBluetooth extends CordovaPlugin {
 
     @Override
     public void onNokeDiscovered(NokeDevice noke) {
+
       mNokeService.connectToNoke(noke);
       if (onNokeDiscoveredCallback != null) {
         PluginResult result = new PluginResult(PluginResult.Status.OK, true);
