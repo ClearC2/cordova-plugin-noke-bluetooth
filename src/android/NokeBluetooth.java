@@ -97,6 +97,7 @@ public class NokeBluetooth extends CordovaPlugin {
 
     @Override
     public void onNokeConnected(NokeDevice noke) {
+      mNokeService.stopScanning();
       if (onNokeConnectingCallback != null) {
         PluginResult result = new PluginResult(PluginResult.Status.OK, false);
         result.setKeepCallback(true);
@@ -230,9 +231,9 @@ public class NokeBluetooth extends CordovaPlugin {
       return true;
     }
 
-    if (action.equals("stopScanning")) {
-      if (stopScanningCallback != null) {
-        mNokeService.stopScanning();
+    if (action.equals("resumeScanning")) {
+      if (currentLock == null) {
+        mNokeService.startScanningForNokeDevices();
         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
       } else {
         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
