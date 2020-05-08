@@ -7,6 +7,7 @@ func consolelog(_ message: String){
 @objc(NokeBluetooth) class NokeBluetooth : CDVPlugin, NokeDeviceManagerDelegate {
 
   var currentNoke : NokeDevice?
+  var resumeScanningCallback : String?
   var onNokeInitCallback : String?
   var onNokeDiscoveredCallback : String?
   var onNokeConnectingCallback : String?
@@ -70,6 +71,7 @@ func consolelog(_ message: String){
           "battery": noke.battery,
           "trackingkey": noke.trackingKey
         ]
+        NokeDeviceManager.shared().stopScan()
         result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: info)
         result.setKeepCallbackAs(true)
         commandDelegate!.send(result, callbackId: onNokeConnectedCallback)
@@ -160,6 +162,16 @@ func consolelog(_ message: String){
     }
   }
 
+  func resumeScanning() {
+    if (currentNoke = nil != nil) {
+      NokeDeviceManager.shared().startScanForNokeDevices()
+      let result: CDVPluginResult
+      result = CDVPluginResult(status: CDVCommandStatus_OK)
+      result.setKeepCallbackAs(true)
+      commandDelegate!.send(result, callbackId: resumeScanningCallback)
+    }
+  }
+
   func nokeErrorDidOccur(error: NokeDeviceManagerError, message: String, noke: NokeDevice?) {
     if (onErrorCallback != nil) {
       let result: CDVPluginResult
@@ -188,6 +200,10 @@ func consolelog(_ message: String){
 
   func bindOnNokeInit(_ command: CDVInvokedUrlCommand) {
     onNokeInitCallback = command.callbackId
+  }
+
+  func resumeScanning(_ command: CDVInvokedUrlCommand) {
+    resumeScanningCallback = command.callbackId
   }
 
   func bindOnNokeDiscovered(_ command: CDVInvokedUrlCommand) {
