@@ -163,7 +163,7 @@ func consolelog(_ message: String){
   }
 
   func resumeScanning() {
-    if (currentNoke = nil != nil) {
+    if (currentNoke != nil) {
       NokeDeviceManager.shared().startScanForNokeDevices()
       let result: CDVPluginResult
       result = CDVPluginResult(status: CDVCommandStatus_OK)
