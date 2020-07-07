@@ -20,7 +20,7 @@ func consolelog(_ message: String){
   var onBluetoothStatusChangedCallback : String?
   var onErrorCallback : String?
 
-  func initService(_ command: CDVInvokedUrlCommand) {
+  @objc(initService:) func initService(_ command: CDVInvokedUrlCommand) {
     // NokeDeviceManager.shared().setAPIKey("eyJhbGciOiJOT0tFX1BSSVZBVEVfU0FOREJPWCIsInR5cCI6IkpXVCJ9.eyJhbGciOiJOT0tFX1BSSVZBVEVfU0FOREJPWCIsImNvbXBhbnlfdXVpZCI6IjdhZWJiOTgyLWU2YTgtNGMyNi04NzUyLWNhODY2ZjMzYzc2YSIsImlzcyI6Im5va2UuY29tIn0.786e0e298707cd68d91fd85f0da3e803d0cb3cd6") //PRODUCTION
     // NokeDeviceManager.shared().setLibraryMode(NokeLibraryMode.PRODUCTION)
     NokeDeviceManager.shared().setAPIKey("eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwidHlwIjoiSldUIn0.eyJhbGciOiJOT0tFX01PQklMRV9TQU5EQk9YIiwiY29tcGFueV91dWlkIjoiN2FlYmI5ODItZTZhOC00YzI2LTg3NTItY2E4NjZmMzNjNzZhIiwiaXNzIjoibm9rZS5jb20ifQ.5eb9b38d6c294e238882703fc7b684e0bba4d28c") //SANDBOX
@@ -143,7 +143,7 @@ func consolelog(_ message: String){
     }
   }
 
-  func nokeDeviceDidShutdown(noke: NokeDevice, isLocked: Bool, didTimeout: Bool) {
+  @objc(nokeDeviceDidShutdown: : :) func nokeDeviceDidShutdown(noke: NokeDevice, isLocked: Bool, didTimeout: Bool) {
     if (onNokeShutdownCallback != nil) {
       let result: CDVPluginResult
       result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: noke.mac)
@@ -153,7 +153,7 @@ func consolelog(_ message: String){
     currentNoke = nil
   }
 
-  func didUploadData(result: Int, message: String) {
+  @objc(didUploadData: :) func didUploadData(result: Int, message: String) {
     if (onDataUploadedCallback != nil) {
       let result: CDVPluginResult
       result = CDVPluginResult(status: CDVCommandStatus_OK)
@@ -162,7 +162,7 @@ func consolelog(_ message: String){
     }
   }
 
-  func resumeScanning() {
+  @objc(resumeScanning) func resumeScanning() {
     if (currentNoke != nil) {
       NokeDeviceManager.shared().startScanForNokeDevices()
       let result: CDVPluginResult
@@ -172,7 +172,7 @@ func consolelog(_ message: String){
     }
   }
 
-  func nokeErrorDidOccur(error: NokeDeviceManagerError, message: String, noke: NokeDevice?) {
+ func nokeErrorDidOccur(error: NokeDeviceManagerError, message: String, noke: NokeDevice?) {
     if (onErrorCallback != nil) {
       let result: CDVPluginResult
       let info: [String: Any] = [
@@ -185,7 +185,7 @@ func consolelog(_ message: String){
     }
   }
 
-  func sendCommands (_ command: CDVInvokedUrlCommand) {
+  @objc(sendCommands:) func sendCommands (_ command: CDVInvokedUrlCommand) {
     let commands = command.arguments[1] as? String ?? ""
     let id = command.arguments[0] as? String ?? ""
     let result: CDVPluginResult
@@ -198,51 +198,51 @@ func consolelog(_ message: String){
     commandDelegate!.send(result, callbackId: command.callbackId)
   }
 
-  func bindOnNokeInit(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeInit:) func bindOnNokeInit(_ command: CDVInvokedUrlCommand) {
     onNokeInitCallback = command.callbackId
   }
 
-  func resumeScanning(_ command: CDVInvokedUrlCommand) {
+  @objc(resumeScanning:) func resumeScanning(_ command: CDVInvokedUrlCommand) {
     resumeScanningCallback = command.callbackId
   }
 
-  func bindOnNokeDiscovered(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeDiscovered:) func bindOnNokeDiscovered(_ command: CDVInvokedUrlCommand) {
     onNokeDiscoveredCallback = command.callbackId
   }
 
-  func bindOnNokeConnecting(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeConnecting:) func bindOnNokeConnecting(_ command: CDVInvokedUrlCommand) {
     onNokeConnectingCallback = command.callbackId
   }
 
-  func bindOnNokeConnected(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeConnected:) func bindOnNokeConnected(_ command: CDVInvokedUrlCommand) {
     onNokeConnectedCallback = command.callbackId
   }
 
-  func bindOnNokeSyncing(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeSyncing:) func bindOnNokeSyncing(_ command: CDVInvokedUrlCommand) {
     onNokeSyncingCallback = command.callbackId
   }
 
-  func bindOnNokeUnlocked(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeUnlocked:) func bindOnNokeUnlocked(_ command: CDVInvokedUrlCommand) {
     onNokeUnlockedCallback = command.callbackId
   }
 
-  func bindOnNokeShutdown(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeShutdown:) func bindOnNokeShutdown(_ command: CDVInvokedUrlCommand) {
     onNokeShutdownCallback = command.callbackId
   }
 
-  func bindOnNokeDisconnected(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeDisconnected:) func bindOnNokeDisconnected(_ command: CDVInvokedUrlCommand) {
     onNokeDiscoveredCallback = command.callbackId
   }
 
-  func bindOnDataUploaded(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnDataUploaded:) func bindOnDataUploaded(_ command: CDVInvokedUrlCommand) {
     onDataUploadedCallback = command.callbackId
   }
 
-  func bindOnBluetoothStatusChanged(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnBluetoothStatusChanged:) func bindOnBluetoothStatusChanged(_ command: CDVInvokedUrlCommand) {
     onBluetoothStatusChangedCallback = command.callbackId
   }
 
-  func bindOnNokeError(_ command: CDVInvokedUrlCommand) {
+  @objc(bindOnNokeError:) func bindOnNokeError(_ command: CDVInvokedUrlCommand) {
     onErrorCallback = command.callbackId
   }
 }
