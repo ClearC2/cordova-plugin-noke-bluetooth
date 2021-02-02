@@ -305,7 +305,7 @@ public class NokeBluetooth extends CordovaPlugin {
   };
 
   private void resumeScanning(final CallbackContext callbackContext) {
-    stopScanningCallback = callbackContext;
+    resumeScanningCallback = callbackContext;
   };
 
   private void bindOnNokeInit(final CallbackContext callbackContext) {
